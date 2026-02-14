@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Someone Special ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  font-family:Segoe UI, sans-serif;
+}
+
+/* BACKGROUND VIDEO */
+#bgVideo{
+  position:fixed;
+  min-width:100%;
+  min-height:100%;
+  object-fit:cover;
+  z-index:-2;
+  animation:zoom 18s infinite alternate;
+}
+
+@keyframes zoom{
+  from{transform:scale(1);}
+  to{transform:scale(1.1);}
+}
+
+/* DARK OVERLAY */
+body::after{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.45);
+  z-index:-1;
+}
+
+/* FIRST PAGE */
+.card{
+  text-align:center;
+  color:white;
+  background:rgba(0,0,0,0.35);
+  padding:60px;
+  border-radius:25px;
+  backdrop-filter:blur(10px);
+  transition:.6s;
+}
+
+.hide{
+  opacity:0;
+  transform:scale(0);
+  pointer-events:none;
+}
+
+/* FRIEND NAME */
+.name{
+  font-family:'Great Vibes', cursive;
+  font-size:65px;
+  color:white;
+  text-shadow:0 0 30px #ff2e63;
+  animation:fadeSlide 2s;
+}
+
+@keyframes fadeSlide{
+  from{
+    opacity:0;
+    transform:translateY(-80px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* BUTTONS */
+button{
+  padding:14px 40px;
+  border:none;
+  border-radius:40px;
+  font-size:18px;
+  cursor:pointer;
+  margin:15px;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+.yes{
+  background:#ff2e63;
+  color:white;
+  box-shadow:0 0 25px #ff2e63;
+}
+
+.no{
+  position:absolute;
+  background:gray;
+  color:white;
+}
+
+/* SECOND PAGE */
+.popup{
+  position:fixed;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  visibility:hidden;
+  opacity:0;
+  transition:.8s;
+  background:rgba(0,0,0,0.6);
+}
+
+.popup.show{
+  visibility:visible;
+  opacity:1;
+}
+
+/* PHOTO */
+.photo{
+  width:270px;
+  border-radius:20px;
+  margin-top:25px;
+  transform:scale(0);
+  animation:photoReveal 1.2s forwards;
+}
+
+@keyframes photoReveal{
+  to{transform:scale(1);}
+}
+
+/* LOVE TEXT */
+#loveText{
+  font-size:34px;
+  color:white;
+  font-family:'Great Vibes', cursive;
+  text-shadow:0 0 20px #ff2e63;
+  margin-top:20px;
+  text-align:center;
+  max-width:80%;
+}
+
+/* FLOAT HEARTS */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:22px;
+  animation:floatUp linear forwards;
+}
+
+@keyframes floatUp{
+  from{
+    transform:translateY(0);
+    opacity:1;
+  }
+  to{
+    transform:translateY(-110vh);
+    opacity:0;
+  }
+}
+
+/* ================== RESPONSIVE ================== */
+@media (max-width: 1024px) {
+  .card {
+    padding:45px;
+    border-radius:20px;
+  }
+
+  .name {
+    font-size:55px;
+  }
+
+  #loveText {
+    font-size:28px;
+    max-width:85%;
+  }
+
+  .photo {
+    width:230px;
+  }
+
+  button {
+    padding:12px 35px;
+    font-size:16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding:30px;
+    border-radius:15px;
+  }
+
+  .name {
+    font-size:45px;
+  }
+
+  #loveText {
+    font-size:24px;
+    max-width:90%;
+  }
+
+  .photo {
+    width:200px;
+  }
+
+  button {
+    padding:10px 25px;
+    font-size:16px;
+  }
+
+  #bgVideo {
+    animation: none;
+  }
+
+  .heart {
+    font-size:14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .name {
+    font-size:35px;
+  }
+
+  #loveText {
+    font-size:20px;
+  }
+
+  .photo {
+    width:160px;
+  }
+
+  button {
+    padding:8px 20px;
+    font-size:14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND VIDEO -->
+<video id="bgVideo" autoplay muted loop>
+  <source src="video.mp4" type="video/mp4">
+</video>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgSong" loop>
+  <source src="song.mp3" type="audio/mp3">
+</audio>
+
+<!-- FIRST SCREEN -->
+<div class="card" id="firstPage">
+  <h1 style="font-size:42px;">Hey 😊</h1>
+  <p style="font-size:20px;">I made something special for you...</p>
+  <button class="yes" onclick="startLove()">OPEN ❤️</button>
+  <button class="no" id="noBtn">NO 😜</button>
+</div>
+
+<!-- SECOND SCREEN -->
+<div class="popup" id="popup">
+  <h1 class="name" id="friendName"></h1>
+  <img src="photo.jpg" class="photo">
+  <h1 id="loveText"></h1>
+</div>
+
+<script>
+/******** EDIT FRIEND NAME HERE ********/
+let name="Drr loosu❤️";
+/****************************************/
+document.getElementById("friendName").innerText=name;
+
+/* NO BUTTON ESCAPE 😜 */
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.left=Math.random()*80+"vw";
+  noBtn.style.top=Math.random()*80+"vh";
+});
+
+function startLove(){
+  document.getElementById("firstPage").classList.add("hide");
+  document.getElementById("popup").classList.add("show");
+  document.getElementById("bgSong").play();
+  typeLove();
+  setInterval(createHeart,300);
+}
+
+/* TYPING LOVE TEXT */
+function typeLove(){
+  let text="You will always be my well-wisher. Thank you for being a beautiful part of my life ❤️";
+  let i=0;
+  function typing(){
+    if(i<text.length){
+      document.getElementById("loveText").innerHTML+=text.charAt(i);
+      i++;
+      setTimeout(typing,40);
+    }
+  }
+  typing();
+}
+
+/* HEART CREATOR */
+function createHeart(){
+  let heart=document.createElement("div");
+  heart.innerHTML="❤️";
+  heart.classList.add("heart");
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.animationDuration=(Math.random()*3+4)+"s";
+  heart.style.fontSize=(Math.random()*25+15)+"px";
+  document.body.appendChild(heart);
+  setTimeout(()=>{heart.remove();},7000);
+}
+</script>
+
+</body>
+</html>
